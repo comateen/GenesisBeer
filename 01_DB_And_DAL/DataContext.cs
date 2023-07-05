@@ -41,7 +41,7 @@ namespace _01_DB
         DbSet<StockBeerWholesaler> stockBeerWholesalers { get; set; }
 
         //PMC ou Package Manager console
-        //la première commande à connaitre c'est celle du helper get-help EntityFrameworkCore
+        //la première commande à connaître c'est celle du helper get-help EntityFrameworkCore
         //la suivante que nous allons utiliser est "add-migration nom_de_la_migration"
         //ça va générer du code c# qui sera i nterprété par EF pour la création de la base de donnée.
         //il sera placé dans un classe nomée "datetim_nomMigration" dans un répertoir Migrations généré par EF lui aussi

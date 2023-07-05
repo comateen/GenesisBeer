@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public float Degree { get; set; }
-        public float Price { get; set; }
+        public double Degree { get; set; }
+        public double Price { get; set; }
         //One-to-Many
         public int BreweryId { get; set; }
         public Brewery Brewer { get; set; }

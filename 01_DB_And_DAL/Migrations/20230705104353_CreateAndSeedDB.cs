@@ -7,7 +7,7 @@
 namespace _01_DB.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateAndSeed : Migration
+    public partial class CreateAndSeedDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,8 +45,8 @@ namespace _01_DB.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Degree = table.Column<float>(type: "real", nullable: false),
-                    Price = table.Column<float>(type: "real", nullable: false),
+                    Degree = table.Column<double>(type: "float", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
                     BreweryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -109,14 +109,14 @@ namespace _01_DB.Migrations
                 columns: new[] { "Id", "BreweryId", "Degree", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, 1, 84f, "Triple Karmeliet", 27f },
-                    { 2, 1, 84f, "Kwak", 245f },
-                    { 3, 2, 58f, "WestVletteren Blonde", 8f },
-                    { 4, 2, 8f, "WestVletteren 8", 11f },
-                    { 5, 2, 12f, "WestVletteren 12", 14f },
-                    { 6, 3, 67f, "Grimbergen Blonde", 22f },
-                    { 7, 3, 65f, "Grimbergen Double", 22f },
-                    { 8, 3, 8f, "Grimbergen Triple", 23f }
+                    { 1, 1, 8.4000000000000004, "Triple Karmeliet", 2.7000000000000002 },
+                    { 2, 1, 8.4000000000000004, "Kwak", 2.4500000000000002 },
+                    { 3, 2, 5.7999999999999998, "WestVletteren Blonde", 8.0 },
+                    { 4, 2, 8.0, "WestVletteren 8", 11.0 },
+                    { 5, 2, 12.0, "WestVletteren 12", 14.0 },
+                    { 6, 3, 6.7000000000000002, "Grimbergen Blonde", 2.2000000000000002 },
+                    { 7, 3, 6.5, "Grimbergen Double", 2.2000000000000002 },
+                    { 8, 3, 8.0, "Grimbergen Triple", 2.2999999999999998 }
                 });
 
             migrationBuilder.InsertData(

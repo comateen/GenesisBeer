@@ -32,16 +32,16 @@ namespace _01_DB.Migrations
                     b.Property<int>("BreweryId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Degree")
-                        .HasColumnType("real");
+                    b.Property<double>("Degree")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -54,65 +54,65 @@ namespace _01_DB.Migrations
                         {
                             Id = 1,
                             BreweryId = 1,
-                            Degree = 84f,
+                            Degree = 8.4000000000000004,
                             Name = "Triple Karmeliet",
-                            Price = 27f
+                            Price = 2.7000000000000002
                         },
                         new
                         {
                             Id = 2,
                             BreweryId = 1,
-                            Degree = 84f,
+                            Degree = 8.4000000000000004,
                             Name = "Kwak",
-                            Price = 245f
+                            Price = 2.4500000000000002
                         },
                         new
                         {
                             Id = 3,
                             BreweryId = 2,
-                            Degree = 58f,
+                            Degree = 5.7999999999999998,
                             Name = "WestVletteren Blonde",
-                            Price = 8f
+                            Price = 8.0
                         },
                         new
                         {
                             Id = 4,
                             BreweryId = 2,
-                            Degree = 8f,
+                            Degree = 8.0,
                             Name = "WestVletteren 8",
-                            Price = 11f
+                            Price = 11.0
                         },
                         new
                         {
                             Id = 5,
                             BreweryId = 2,
-                            Degree = 12f,
+                            Degree = 12.0,
                             Name = "WestVletteren 12",
-                            Price = 14f
+                            Price = 14.0
                         },
                         new
                         {
                             Id = 6,
                             BreweryId = 3,
-                            Degree = 67f,
+                            Degree = 6.7000000000000002,
                             Name = "Grimbergen Blonde",
-                            Price = 22f
+                            Price = 2.2000000000000002
                         },
                         new
                         {
                             Id = 7,
                             BreweryId = 3,
-                            Degree = 65f,
+                            Degree = 6.5,
                             Name = "Grimbergen Double",
-                            Price = 22f
+                            Price = 2.2000000000000002
                         },
                         new
                         {
                             Id = 8,
                             BreweryId = 3,
-                            Degree = 8f,
+                            Degree = 8.0,
                             Name = "Grimbergen Triple",
-                            Price = 23f
+                            Price = 2.2999999999999998
                         });
                 });
 
