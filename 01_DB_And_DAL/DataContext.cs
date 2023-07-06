@@ -12,6 +12,14 @@ namespace _01_DB
 {
     public class DataContext : DbContext
     {
+        public DataContext()
+        {
+            
+        }
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
             optionBuilder.UseSqlServer(
@@ -35,10 +43,10 @@ namespace _01_DB
         }
 
         //Les DBSet qui vont créer des objets IQueryable à qui on pourra envoyer des requêt Linq
-        DbSet<Brewery> breweries {  get; set; }
-        DbSet<Beer> beers { get; set; }
-        DbSet<Wholesaler> wholesalers { get; set; }
-        DbSet<StockBeerWholesaler> stockBeerWholesalers { get; set; }
+        public DbSet<Brewery> breweries {  get; set; }
+        public DbSet<Beer> beers { get; set; }
+        public DbSet<Wholesaler> wholesalers { get; set; }
+        public DbSet<StockBeerWholesaler> stockBeerWholesalers { get; set; }
 
         //PMC ou Package Manager console
         //la première commande à connaître c'est celle du helper get-help EntityFrameworkCore
