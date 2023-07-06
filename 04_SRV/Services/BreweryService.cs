@@ -10,13 +10,15 @@ namespace _04_SRV.Services
 {
     public class BreweryService : ServiceHelper, IBreweryService
     {
+        #region private variable
         private readonly IBreweryRepository _breweryRepository;
-
+        #endregion
         public BreweryService(IBreweryRepository breweryRepository)
         {
             _breweryRepository = breweryRepository;
         }
 
+        #region public method
         public IEnumerable<BreweryWithBeersAndSalers> GetAllBrewerWithBeerAndSalers()
         {
             List<Brewery> breweries = new List<Brewery>();
@@ -33,7 +35,9 @@ namespace _04_SRV.Services
         {
             return _breweryRepository.IsBreweryExist(id);
         }
+        #endregion
 
+        #region private method
         private List<BreweryWithBeersAndSalers> ConvertBreweriesFromDB(List<Brewery> breweries)
         {
             List<BreweryWithBeersAndSalers> breweryWBSList = new List<BreweryWithBeersAndSalers>();
@@ -50,7 +54,7 @@ namespace _04_SRV.Services
             }
             return breweryWBSList;
         }
+        #endregion
 
-        
     }
 }

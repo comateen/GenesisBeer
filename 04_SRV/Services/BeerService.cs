@@ -14,8 +14,10 @@ namespace _04_SRV.Services
 {
     public class BeerService : ServiceHelper, IBeerService
     {
+        #region private variable
         private readonly IBeerRepository _beerRepo;
         private readonly IBreweryService _breweryService;
+        #endregion
 
         public BeerService(IBeerRepository beerRepo, IBreweryService breweryService)
         {
@@ -23,6 +25,7 @@ namespace _04_SRV.Services
             _breweryService = breweryService;
         }
 
+        #region public method
         public IEnumerable<BeerClient> GetAllBeerWithBrewerAndSalers()
         {
             List<Beer> beers = new List<Beer>();
@@ -48,9 +51,9 @@ namespace _04_SRV.Services
                 throw new Exception("Erreur lors de la sauvegarde de la bière");
             }
         }
+        #endregion
 
-
-
+        #region private method
         private List<BeerClient> ConvertBeerFromDB(List<Beer> beers)
         {
             List<BeerClient> beerClients = SetBeerClient(beers);
@@ -67,6 +70,6 @@ namespace _04_SRV.Services
 
             return beer;
         }
-
+        #endregion
     }
 }

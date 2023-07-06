@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Repos
 builder.Services.AddScoped<IBeerRepository,BeerRepository>();
 builder.Services.AddScoped<IBreweryRepository,BreweryRepository>();
+builder.Services.AddScoped<IStockBeerWholesalerRepository,StockBeerWolesalerRepository>();
 // Services
 builder.Services.AddScoped<IBeerService, BeerService>();
 builder.Services.AddScoped<IBreweryService, BreweryService>();
