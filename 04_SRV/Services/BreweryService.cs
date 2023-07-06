@@ -3,11 +3,12 @@ using _01_DB.Entities;
 using _02_DAL.Interfaces;
 using _03_Models.Models;
 using _03_Models.VM;
+using _04_SRV.Helper;
 using _04_SRV.Interfaces;
 
 namespace _04_SRV.Services
 {
-    public class BreweryService : IBreweryService
+    public class BreweryService : ServiceHelper, IBreweryService
     {
         private readonly IBreweryRepository _breweryRepository;
 
@@ -43,39 +44,13 @@ namespace _04_SRV.Services
                 breweryWBS.Id = brewery.Id;
                 breweryWBS.Name = brewery.Name;
 
-                List<BeerClient> beerClients = new List<BeerClient>();
-                foreach(Beer beer in brewery.Beers)
-                {
-                    BeerClient beerClient = new BeerClient();
-                    beerClient.Id = beer.Id;
-                    beerClient.Name = beer.Name;
-                    beerClient.Degree = beer.Degree;
-                    beerClient.Price = beer.Price;
+                breweryWBS.Beers = SetBeerClient(brewery.Beers);
 
-                    BreweryClient brewer = new BreweryClient();
-                    brewer.Id = beer.Brewer.Id;
-                    brewer.Name = beer.Brewer.Name;
-
-                    List<WholesalerClient> wholesalers = new List<WholesalerClient>();
-
-                    foreach (StockBeerWholesaler wholesalerDB in beer.Wholesalers)
-                    {
-                        WholesalerClient wholesaler = new WholesalerClient();
-                        if (wholesalerDB.Saler != null)
-                        {
-                            wholesaler.Id = wholesalerDB.Saler.Id;
-                            wholesaler.Name = wholesalerDB.Saler.Name;
-                        }
-
-                        wholesalers.Add(wholesaler);
-                    }
-                    beerClient.Wholesalers = wholesalers;
-                    beerClients.Add(beerClient);
-                }
-                breweryWBS.Beers = beerClients;
                 breweryWBSList.Add(breweryWBS);
             }
             return breweryWBSList;
         }
+
+        
     }
 }
