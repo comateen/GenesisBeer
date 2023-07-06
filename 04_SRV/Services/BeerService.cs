@@ -40,11 +40,12 @@ namespace _04_SRV.Services
 
         public void AddBeer(AddBeerModel addBeer)
         {
-            //la validiter du addbeer model ne se fait (selon oi pas ici mais plutot dans une mvc et un modelstate.isvalid, dans le doute je vérifie juste si le brasseur est connu
+            //la validiter du addbeer model ne se fait (selon moi pas ici mais plutot dans une mvc et un modelstate.isvalid, dans le doute je vérifie juste si le brasseur est connu
             if (!_breweryService.IsBreweryExist(addBeer.BreweryId))
             {
                 throw new Exception("le brasseur indiqué n'existe pas");
             }
+            //TODO voir comment vérifier que la bière n'existe pas 
             Beer beer = ConvertToBeerDB(addBeer);
             if (!_beerRepo.AddBeer(beer))
             {

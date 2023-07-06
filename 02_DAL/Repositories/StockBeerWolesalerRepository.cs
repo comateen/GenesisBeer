@@ -27,7 +27,7 @@ namespace _02_DAL.Repositories
 
         public StockBeerWholesaler GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)
         {
-            return _context.stockBeerWholesalers.FirstOrDefault(sbw => sbw.BeerId == beerId && sbw.WholesalerId == wholesalerId);
+            return _context.stockBeerWholesalers?.FirstOrDefault(sbw => sbw.BeerId == beerId && sbw.WholesalerId == wholesalerId);
         }
 
         public bool UpdateStockBeerWholesaler(StockBeerWholesaler stockBeerWolesaler)
