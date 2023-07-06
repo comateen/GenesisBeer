@@ -11,9 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IBeerRepository,BeerRepository>();
 builder.Services.AddScoped<IBreweryRepository,BreweryRepository>();
 builder.Services.AddScoped<IStockBeerWholesalerRepository,StockBeerWolesalerRepository>();
+builder.Services.AddScoped<IWholesalerRepository, WholesalerRepository>();
 // Services
 builder.Services.AddScoped<IBeerService, BeerService>();
 builder.Services.AddScoped<IBreweryService, BreweryService>();
+builder.Services.AddScoped<IStockBeerWholesalerService, StockBeerWholesalerService>();
+builder.Services.AddScoped<IWholesalerService,  WholesalerService>();
 
 //Config
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("GenesisBeerDB")));

@@ -11,6 +11,7 @@ namespace _02_DAL.Interfaces
     public interface IStockBeerWholesalerRepository
     {
         public bool AddNewBeerToWholeSaler(StockBeerWholesaler stockBeerWolesaler);
-        public bool UpdateWholesalerBeerToStock(StockBeerWholesaler stockBeerWolesaler);
+        public bool UpdateStockBeerWholesaler(StockBeerWholesaler stockBeerWolesaler);
+        public StockBeerWholesaler GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId);
     }
 }

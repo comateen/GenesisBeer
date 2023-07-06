@@ -51,6 +51,11 @@ namespace _04_SRV.Services
                 throw new Exception("Erreur lors de la sauvegarde de la bière");
             }
         }
+
+        public bool IsBeerExist(int id)
+        {
+            return _beerRepo.IsBeerExist(id);
+        }
         #endregion
 
         #region private method

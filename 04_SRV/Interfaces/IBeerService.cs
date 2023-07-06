@@ -12,5 +12,6 @@ namespace _04_SRV.Interfaces
     {
         public IEnumerable<BeerClient> GetAllBeerWithBrewerAndSalers();
         public void AddBeer(AddBeerModel addBeer);
+        public bool IsBeerExist(int id);
     }
 }

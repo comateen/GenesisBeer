@@ -25,10 +25,16 @@ namespace _02_DAL.Repositories
             return _context.SaveChanges() > 0;
         }
 
-        public bool UpdateWholesalerBeerToStock(StockBeerWholesaler stockBeerWolesaler)
+        public StockBeerWholesaler GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)
+        {
+            return _context.stockBeerWholesalers.FirstOrDefault(sbw => sbw.BeerId == beerId && sbw.WholesalerId == wholesalerId);
+        }
+
+        public bool UpdateStockBeerWholesaler(StockBeerWholesaler stockBeerWolesaler)
         {
             _context.stockBeerWholesalers.Update(stockBeerWolesaler);
             return _context.SaveChanges() > 0;
         }
+        
     }
 }

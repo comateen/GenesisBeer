@@ -11,5 +11,6 @@ namespace _02_DAL.Interfaces
     {
         public bool TryToGetAllBeerData(out List<Beer> beers);
         public bool AddBeer(Beer beer);
+        public bool IsBeerExist(int id);
     }
 }
