@@ -47,21 +47,19 @@ namespace _04_SRV.Services
 
         public bool UpdateStockBeerWholesaler(StockBeerWholesalerClient stockBWS)
         {
-            if(IsBeerAndSalerExist(stockBWS.BeerId, stockBWS.WholesalerId))
+            StockBeerWholesalerClient stockInDB = GetStockBeerWholesalerByBeerIdAndWholesalerId(stockBWS.BeerId, stockBWS.WholesalerId);
+            if(stockInDB != null && stockBWS.Quantity > 0)
             {
-                StockBeerWholesalerClient stockInDB = GetStockBeerWholesalerByBeerIdAndWholesalerId(stockBWS.BeerId, stockBWS.WholesalerId);
-
-                if (stockBWS.Quantity > 0 && stockInDB.Quantity != stockBWS.Quantity)
+                if (stockInDB.Quantity != stockBWS.Quantity)
                 {
                     stockInDB.Quantity = stockBWS.Quantity;
-                    _stockBeerRepository.UpdateStockBeerWholesaler(ConvertStockClientToDB(stockInDB));
+                    return _stockBeerRepository.UpdateStockBeerWholesaler(ConvertStockClientToDB(stockInDB));
                     //je fais la maj ici car si le stock est identique il est inutile de mettre à jour
                 }
-                
                 return true;
             }
 
-            return false;
+            throw new Exception("Le stock impossible à modifier");
         }
 
         public StockBeerWholesalerClient GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)
@@ -79,7 +77,7 @@ namespace _04_SRV.Services
         #region private Method
         private bool IsBeerAndSalerExist(int beerId, int wholesalerId)
         {
-            if (_beerService.IsBeerExist(beerId))
+            if (!_beerService.IsBeerExist(beerId))
             {
                 throw new Exception("La bière que vous vouler ajouter n'existe pas");
             }
