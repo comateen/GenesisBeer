@@ -13,13 +13,18 @@ namespace _02_DAL.Repositories
         {
             _context = context;
         }
-        
+
         public bool TryToGetAllBeerData(out List<Beer> beers)
         {
             beers = _context.beers.Include(b => b.Brewer)
                                   .Include(b => b.Wholesalers).ThenInclude(w => w.Saler).ToList();
 
             return beers.Any();
+        }
+        public bool AddBeer(Beer beer)
+        {
+            _context.beers.Add(beer);
+            return _context.SaveChanges() > 0;
         }
     }
 }

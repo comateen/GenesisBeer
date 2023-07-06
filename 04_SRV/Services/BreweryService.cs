@@ -28,6 +28,11 @@ namespace _04_SRV.Services
             throw new Exception("Nous n'avons pas trouvé de brasseur");
         }
 
+        public bool IsBreweryExist(int id)
+        {
+            return _breweryRepository.IsBreweryExist(id);
+        }
+
         private List<BreweryWithBeersAndSalers> ConvertBreweriesFromDB(List<Brewery> breweries)
         {
             List<BreweryWithBeersAndSalers> breweryWBSList = new List<BreweryWithBeersAndSalers>();

@@ -17,9 +17,17 @@ namespace _05_API.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllBrewery")]
         public IActionResult GetAllBrewery()
-        { 
-            return Ok(_breweryService.GetAllBrewerWithBeerAndSalers());
+        {
+            try
+            {
+                return Ok(_breweryService.GetAllBrewerWithBeerAndSalers());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

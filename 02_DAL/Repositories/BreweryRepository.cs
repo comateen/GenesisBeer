@@ -27,5 +27,11 @@ namespace _02_DAL.Repositories
                                           .ToList();
             return breweries.Any();
         }
+
+        public bool IsBreweryExist(int id)
+        {
+            bool exist = _context.breweries.Any(b => b.Id == id);
+            return exist;
+        }
     }
 }
