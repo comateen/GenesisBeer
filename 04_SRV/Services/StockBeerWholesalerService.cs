@@ -47,14 +47,21 @@ namespace _04_SRV.Services
 
         public bool UpdateStockBeerWholesaler(StockBeerWholesalerClient stockBWS)
         {
-            if(IsBeerAndSalerExist()
-            StockBeerWholesalerClient stockInDB = GetStockBeerWholesalerByBeerIdAndWholesalerId(stockBWS.BeerId, stockBWS.WholesalerId);
-
-            if(stockInDB.Quantity != stockBWS.Quantity)
+            if(IsBeerAndSalerExist(stockBWS.BeerId, stockBWS.WholesalerId))
             {
-                stockInDB.Quantity = stockBWS.Quantity;
+                StockBeerWholesalerClient stockInDB = GetStockBeerWholesalerByBeerIdAndWholesalerId(stockBWS.BeerId, stockBWS.WholesalerId);
+
+                if (stockBWS.Quantity > 0 && stockInDB.Quantity != stockBWS.Quantity)
+                {
+                    stockInDB.Quantity = stockBWS.Quantity;
+                    _stockBeerRepository.UpdateStockBeerWholesaler(ConvertStockClientToDB(stockInDB));
+                    //je fais la maj ici car si le stock est identique il est inutile de mettre à jour
+                }
+                
+                return true;
             }
-            throw new NotImplementedException();
+
+            return false;
         }
 
         public StockBeerWholesalerClient GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)

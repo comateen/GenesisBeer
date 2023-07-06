@@ -27,7 +27,7 @@ namespace _02_DAL.Repositories
             return _context.SaveChanges() > 0;
         }
 
-        public bool IsbeerExist(int id)
+        public bool IsBeerExist(int id)
         {
             return _context.beers.Any(b => b.Id == id);
         }
