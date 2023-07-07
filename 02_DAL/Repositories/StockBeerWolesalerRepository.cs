@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace _02_DAL.Repositories
 {
-
     public class StockBeerWolesalerRepository : IStockBeerWholesalerRepository
     {
         private readonly DataContext _context;
@@ -38,6 +37,14 @@ namespace _02_DAL.Repositories
             _context.stockBeerWholesalers.Update(stockBeerWolesaler);
             return _context.SaveChanges() > 0;
         }
-        
+
+        public bool DeleteStockBeerWholesaler(StockBeerWholesaler stockBeerWolesaler)
+        {
+            //var toDelete = _context.stockBeerWholesalers.FirstOrDefault(sbw => sbw.BeerId == stockBeerWolesaler.BeerId && sbw.WholesalerId == stockBeerWolesaler.WholesalerId);
+            //_context.stockBeerWholesalers.Remove(toDelete);
+            //var test = _context.stockBeerWholesalers;
+            _context.stockBeerWholesalers.Remove(stockBeerWolesaler);
+            return _context.SaveChanges() > 0;
+        }
     }
 }

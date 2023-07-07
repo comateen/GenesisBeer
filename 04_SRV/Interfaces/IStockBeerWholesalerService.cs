@@ -1,4 +1,5 @@
-﻿using _03_Models.Models;
+﻿using _01_DB.Entities;
+using _03_Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace _04_SRV.Interfaces
         public bool AddNewBeerToWholeSaler(StockBeerWholesalerClient stockBWS);
         public bool UpdateStockBeerWholesaler(StockBeerWholesalerClient stockBWS);
         public StockBeerWholesalerClient GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId);
+        public bool DeleteStockBeerWholesaler(int beerId, int wholesalerId);
     }
 }

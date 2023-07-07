@@ -30,7 +30,7 @@ namespace _05_API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateStockBeerWholesaler")]
         public IActionResult UpdateStockBeerWholesaler(StockBeerWholesalerClient stockBeerWholesalerClient)
         {
@@ -40,6 +40,20 @@ namespace _05_API.Controllers
             }
             catch (Exception ex) 
             { 
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("DeleteBeerFromWholesaler")]
+        public IActionResult DeleteBeerFromWholesaler(int beerId, int wholesalerId)
+        {
+            try
+            {
+                return Ok(_stockBeerWholesalerService.DeleteStockBeerWholesaler(beerId, wholesalerId));
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
         }

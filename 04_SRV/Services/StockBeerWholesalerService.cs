@@ -48,7 +48,7 @@ namespace _04_SRV.Services
         public bool UpdateStockBeerWholesaler(StockBeerWholesalerClient stockBWS)
         {
             StockBeerWholesalerClient stockInDB = GetStockBeerWholesalerByBeerIdAndWholesalerId(stockBWS.BeerId, stockBWS.WholesalerId);
-            if(stockInDB != null && stockBWS.Quantity > 0)
+            if(stockInDB != null && stockBWS.Quantity >= 0)
             {
                 if (stockInDB.Quantity != stockBWS.Quantity)
                 {
@@ -70,6 +70,17 @@ namespace _04_SRV.Services
                 throw new Exception("cette référence n'existe pas");
             }
             return ConvertStockDBToClient(stockBeerWholesaler);
+        }
+
+        public bool DeleteStockBeerWholesaler(int beerId, int wholesalerId)
+        {
+            StockBeerWholesalerClient stockInDB = GetStockBeerWholesalerByBeerIdAndWholesalerId(beerId, wholesalerId);
+            if (stockInDB == null || stockInDB.Quantity > 0)
+            {
+                throw new Exception("Le brasseur doit d'abord écouler son stock");
+            }
+            return _stockBeerRepository.DeleteStockBeerWholesaler(ConvertStockClientToDB(stockInDB));
+            
         }
 
         #endregion
