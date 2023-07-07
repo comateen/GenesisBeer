@@ -21,6 +21,11 @@ namespace _02_DAL.Repositories
 
             return beers.Any();
         }
+        public bool GetOneBeer(int id, out Beer beer) 
+        {
+            beer = _context.beers.FirstOrDefault(b => b.Id == id);
+            return beer != null;
+        }
         public bool AddBeer(Beer beer)
         {
             _context.beers.Add(beer);

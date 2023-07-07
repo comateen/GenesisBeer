@@ -1,5 +1,6 @@
 ﻿using _03_Models.AddModels;
 using _03_Models.Models;
+using _03_Models.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace _04_SRV.Interfaces
         public IEnumerable<BeerClient> GetAllBeerWithBrewerAndSalers();
         public void AddBeer(AddBeerModel addBeer);
         public bool IsBeerExist(int id);
+        public BeerToShow GetOneBeerForEstimateReturn(int id);
     }
 }

@@ -2,6 +2,7 @@
 using _02_DAL.Interfaces;
 using _03_Models.AddModels;
 using _03_Models.Models;
+using _03_Models.VM;
 using _04_SRV.Helper;
 using _04_SRV.Interfaces;
 using System;
@@ -36,6 +37,22 @@ namespace _04_SRV.Services
                 return beerClients;
             }
             throw new Exception("Nous n'avons pas trouvé de bière");
+        }
+
+        public BeerToShow GetOneBeerForEstimateReturn(int id)
+        {
+            Beer beerDB = new Beer();
+            if(_beerRepo.GetOneBeer(id, out beerDB))
+            {
+                BeerToShow beerToShow = new BeerToShow();
+                beerToShow.Id = beerDB.Id;
+                beerToShow.Name = beerDB.Name;
+                beerToShow.Degree = beerDB.Degree;
+                beerToShow.Price = beerDB.Price;
+
+                return beerToShow;
+            }
+            throw new Exception($"Problème lors de la récupération de la bière portant l'identifiant {id}");
         }
 
         public void AddBeer(AddBeerModel addBeer)
