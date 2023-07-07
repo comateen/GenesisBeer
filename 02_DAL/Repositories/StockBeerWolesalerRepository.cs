@@ -40,9 +40,6 @@ namespace _02_DAL.Repositories
 
         public bool DeleteStockBeerWholesaler(StockBeerWholesaler stockBeerWolesaler)
         {
-            //var toDelete = _context.stockBeerWholesalers.FirstOrDefault(sbw => sbw.BeerId == stockBeerWolesaler.BeerId && sbw.WholesalerId == stockBeerWolesaler.WholesalerId);
-            //_context.stockBeerWholesalers.Remove(toDelete);
-            //var test = _context.stockBeerWholesalers;
             _context.stockBeerWholesalers.Remove(stockBeerWolesaler);
             return _context.SaveChanges() > 0;
         }
