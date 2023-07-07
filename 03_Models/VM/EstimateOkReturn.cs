@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _03_Models.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,8 @@ namespace _03_Models.VM
     public class EstimateOkReturn
     {
         public int Id { get; set; }
-        public List<BeerByWholesalerForEstimateReturn> Beers { get; set; }
-        public double? Total { get; set; }
+        public WholesalerClient Wholesaler { get; set; }
+        public List<BeerToShow> Beers { get; set; }
+        public double? TotalHTVA { get; set; }
     }
 }

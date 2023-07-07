@@ -34,6 +34,7 @@ namespace _04_SRV.Services
         {
             int totalQuantityBeer = 0;
             double totalPrice = 0;
+            WholesalerClient wholesaler = _wholesalerService.GetOneWholesaler(addEstimateModel.WholesalerId);
             if(addEstimateModel == null || addEstimateModel.Beers == null || addEstimateModel.Beers.Count <= 0)
             {
                 throw new ArgumentException("La commande est vide ou incomplète");
@@ -43,37 +44,53 @@ namespace _04_SRV.Services
             {
                 throw new ArgumentException("Vous commandez deux fois la même bière chez le même brasseur");
             }
-
-
-
-            //TODO revoir le code et les modèles, on ne commade que chez un grossiste à la fois
-            foreach(var beerEstimate in addEstimateModel.Beers)
+            if (wholesaler == null)
             {
-                
-                if (!_wholesalerService.IsWholesalerExist(beerEstimate.WholesalerId))
-                {
-                    throw new Exception($"Le grossiste portant l'identifiant {beerEstimate.WholesalerId} n'existe pas");
-                }
+                throw new Exception($"Le grossiste portant l'identifiant {addEstimateModel.WholesalerId} n'existe pas");
+            }
+            List<BeerToShow> beersToShow = new List<BeerToShow>();
+            foreach (var beerEstimate in addEstimateModel.Beers)
+            {
                 BeerToShow beer = _beerService.GetOneBeerForEstimateReturn(beerEstimate.BeerId);
                 if (beer == null)
                 {
                     throw new Exception($"La bière portant l'identifiant {beerEstimate.BeerId} n'existe pas");
                 }
-                StockBeerWholesalerClient stockBeerWholesaler = _stockBeerWholesalerService.GetStockBeerWholesalerByBeerIdAndWholesalerId(beerEstimate.BeerId, beerEstimate.WholesalerId);
+                StockBeerWholesalerClient stockBeerWholesaler = _stockBeerWholesalerService.GetStockBeerWholesalerByBeerIdAndWholesalerId(beerEstimate.BeerId, addEstimateModel.WholesalerId);
                 if (stockBeerWholesaler == null)
                 {
-                    throw new Exception($"Le grossiste portant l'identifiant {beerEstimate.WholesalerId} ne vend pas la bière portant l'identifiant {beerEstimate.BeerId}");
+                    throw new Exception($"Le grossiste {wholesaler.Name} ne vend pas la bière {beer.Name}");
                 }
                 if(beerEstimate.Quantity > stockBeerWholesaler.Quantity)
                 {
-                    throw new Exception($"Le grossiste portant l'identifiant {beerEstimate.WholesalerId} n'a pas asser de stock de bière portant l'identifiant {beerEstimate.BeerId}");
+                    throw new Exception($"Le grossiste {wholesaler.Name} n'a pas assez de stock de bière {beer.Name}");
                 }
+
+                beer.Quantity = beerEstimate.Quantity;
+                beersToShow.Add(beer);
                 double price = beerEstimate.Quantity * beer.Price;
                 totalPrice += price;
                 totalQuantityBeer += beerEstimate.Quantity;
-                
             }
-            throw new NotImplementedException();
+
+            EstimateOkReturn estimate = new EstimateOkReturn();
+            estimate.Wholesaler = wholesaler;
+            estimate.Beers = beersToShow;
+
+            if(totalQuantityBeer > 20) 
+            {
+                estimate.TotalHTVA = totalPrice * 0.8;
+            } 
+            else if (totalQuantityBeer > 10) 
+            {
+                estimate.TotalHTVA = totalPrice * 0.9;
+            }
+            else
+            {
+                estimate.TotalHTVA = totalPrice;
+            }
+
+            return estimate;
         }
         public bool AddEstimate(AddEstimateModel addEstimateModel)
         {

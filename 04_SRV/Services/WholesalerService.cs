@@ -1,4 +1,6 @@
-﻿using _02_DAL.Interfaces;
+﻿using _01_DB.Entities;
+using _02_DAL.Interfaces;
+using _03_Models.Models;
 using _04_SRV.Interfaces;
 
 namespace _04_SRV.Services
@@ -12,6 +14,18 @@ namespace _04_SRV.Services
             _wholesalerRepository = wholesalerRepository;
         }
 
+        public WholesalerClient GetOneWholesaler(int id)
+        {
+            Wholesaler wholesalerDB; 
+            if(_wholesalerRepository.GetOneWholesaler(id, out wholesalerDB))
+            {
+                WholesalerClient wholesaler = new WholesalerClient();
+                wholesaler.Id = wholesalerDB.Id;
+                wholesaler.Name = wholesalerDB.Name;
+                return wholesaler;
+            }
+            throw new Exception("Le grosiste rechercher n'existe pas");
+        }
         public bool IsWholesalerExist(int id)
         {
             return _wholesalerRepository.IsWholesalerExist(id);

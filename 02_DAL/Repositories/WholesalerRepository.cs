@@ -1,4 +1,5 @@
 ﻿using _01_DB;
+using _01_DB.Entities;
 using _02_DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,12 @@ namespace _02_DAL.Repositories
         public WholesalerRepository(DataContext context)
         {
             _context = context;
+        }
+
+        public bool GetOneWholesaler(int id, out Wholesaler wholesaler)
+        {
+            wholesaler = _context.wholesalers.FirstOrDefault(w => w.Id == id);
+            return wholesaler != null;
         }
 
         public bool IsWholesalerExist(int id)
