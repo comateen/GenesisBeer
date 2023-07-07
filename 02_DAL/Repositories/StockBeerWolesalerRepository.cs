@@ -1,6 +1,7 @@
 ﻿using _01_DB;
 using _01_DB.Entities;
 using _02_DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,9 @@ namespace _02_DAL.Repositories
 
         public StockBeerWholesaler GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)
         {
-            return _context.stockBeerWholesalers?.FirstOrDefault(sbw => sbw.BeerId == beerId && sbw.WholesalerId == wholesalerId);
+            //return _context.stockBeerWholesalers.FirstOrDefault(sbw => sbw.BeerId == beerId && sbw.WholesalerId == wholesalerId);
+            return _context.stockBeerWholesalers.AsNoTracking().FirstOrDefault(sbw => sbw.BeerId == beerId && sbw.WholesalerId == wholesalerId);
+            //attention le AsNoTracking risque de faire planter les Unit test
         }
 
         public bool UpdateStockBeerWholesaler(StockBeerWholesaler stockBeerWolesaler)
