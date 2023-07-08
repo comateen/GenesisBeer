@@ -34,6 +34,8 @@ namespace _01_DB
             modelBuilder.ApplyConfiguration(new BeerConfiguration());
             modelBuilder.ApplyConfiguration(new WholesalerConfiguration());
             modelBuilder.ApplyConfiguration(new StockBeerWholesalerConfiguration());
+            modelBuilder.ApplyConfiguration(new EstimateConfiguration());
+            modelBuilder.ApplyConfiguration(new BeerEstimateConfiguration());
 
             //data seed
             modelBuilder.ApplyConfiguration(new DataSetBrewery());
@@ -47,6 +49,8 @@ namespace _01_DB
         public DbSet<Beer> beers { get; set; }
         public DbSet<Wholesaler> wholesalers { get; set; }
         public DbSet<StockBeerWholesaler> stockBeerWholesalers { get; set; }
+        public DbSet<Estimate> estimates { get; set; }
+        public DbSet<BeerEstimate> beersEstimates { get; set; }
 
         //PMC ou Package Manager console
         //la première commande à connaître c'est celle du helper get-help EntityFrameworkCore

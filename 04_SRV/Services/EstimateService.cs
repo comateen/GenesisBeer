@@ -89,12 +89,32 @@ namespace _04_SRV.Services
             {
                 estimate.TotalHTVA = totalPrice;
             }
-
+            if (!AddEstimate(addEstimateModel))
+            {
+                throw new Exception("Problème lors de la sauvegarde du devis");
+            }
             return estimate;
         }
         public bool AddEstimate(AddEstimateModel addEstimateModel)
         {
-            throw new NotImplementedException();
+            Estimate estimate = new Estimate();
+            estimate.WholesalerId = addEstimateModel.WholesalerId;
+            List<BeerEstimate> beers = new List<BeerEstimate>();
+            foreach(BeerEstimateClient beerTS in addEstimateModel.Beers)
+            {
+                BeerEstimate beer = new BeerEstimate();
+
+                beer.BeerId = beerTS.BeerId;
+                beer.Quantity = beerTS.Quantity;
+                beers.Add(beer);
+            }
+            estimate.Beers = beers;
+
+            if(_estimateRepository.AddEstimate(estimate))
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
 
