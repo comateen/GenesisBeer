@@ -35,19 +35,16 @@ namespace _04_SRV.Services
             int totalQuantityBeer = 0;
             double totalPrice = 0;
             WholesalerClient wholesaler = _wholesalerService.GetOneWholesaler(addEstimateModel.WholesalerId);
-            if(addEstimateModel == null || addEstimateModel.Beers == null || addEstimateModel.Beers.Count <= 0)
-            {
-                throw new ArgumentException("La commande est vide ou incomplète");
-            }
-            bool anyDuplicate = addEstimateModel.Beers.GroupBy(b => b.BeerId).Any(g => g.Count() > 1);
-            if(anyDuplicate)
-            {
-                throw new ArgumentException("Vous commandez deux fois la même bière chez le même brasseur");
-            }
             if (wholesaler == null)
             {
                 throw new Exception($"Le grossiste portant l'identifiant {addEstimateModel.WholesalerId} n'existe pas");
             }
+            string errorMessage;
+            if (!CheckBasic(addEstimateModel,out errorMessage))
+            {
+                throw new Exception(errorMessage);
+            }
+            
             List<BeerToShow> beersToShow = new List<BeerToShow>();
             foreach (var beerEstimate in addEstimateModel.Beers)
             {
@@ -77,24 +74,17 @@ namespace _04_SRV.Services
             estimate.Wholesaler = wholesaler;
             estimate.Beers = beersToShow;
 
-            if(totalQuantityBeer > 20) 
-            {
-                estimate.TotalHTVA = totalPrice * 0.8;
-            } 
-            else if (totalQuantityBeer > 10) 
-            {
-                estimate.TotalHTVA = totalPrice * 0.9;
-            }
-            else
-            {
-                estimate.TotalHTVA = totalPrice;
-            }
+            estimate.TotalHTVA = DefineTotalHTVA(totalPrice, totalQuantityBeer);
+            
             if (!AddEstimate(addEstimateModel))
             {
                 throw new Exception("Problème lors de la sauvegarde du devis");
             }
             return estimate;
         }
+
+        
+
         public bool AddEstimate(AddEstimateModel addEstimateModel)
         {
             Estimate estimate = new Estimate();
@@ -118,5 +108,40 @@ namespace _04_SRV.Services
         }
         #endregion
 
+        #region private methode
+
+        private bool CheckBasic(AddEstimateModel addEstimateModel, out string errorMessage)
+        {
+            errorMessage = string.Empty;
+            if (addEstimateModel == null || addEstimateModel.Beers == null || addEstimateModel.Beers.Count <= 0)
+            {
+                errorMessage = "La commande est vide ou incomplète";
+                return false;
+            }
+            bool anyDuplicate = addEstimateModel.Beers.GroupBy(b => b.BeerId).Any(g => g.Count() > 1);
+            if (anyDuplicate)
+            {
+                errorMessage = "Vous commandez deux fois la même bière chez le même brasseur";
+                return false;
+            }
+            return true;
+        }
+        private double DefineTotalHTVA(double totalPrice, int totalQuantityBeer)
+        {
+            if (totalQuantityBeer > 20)
+            {
+                return totalPrice * 0.8;
+            }
+            else if (totalQuantityBeer > 10)
+            {
+                return totalPrice * 0.9;
+            }
+            else
+            {
+                return totalPrice;
+            }
+        }
+
+        #endregion
     }
 }
