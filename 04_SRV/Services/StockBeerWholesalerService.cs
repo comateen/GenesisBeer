@@ -1,6 +1,7 @@
 ﻿using _01_DB.Entities;
 using _02_DAL.Interfaces;
 using _03_Models.Models;
+using _03_Models.VM;
 using _04_SRV.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,17 @@ namespace _04_SRV.Services
 
             throw new Exception("Le stock impossible à modifier");
         }
+        public StockWholesaler GetAllStockBeerByWholesalerId(int id)
+        {
+            List<StockBeerWholesaler> stockDB = _stockBeerRepository.GetAllStockBeerByWholesalerId(id);
+            if(stockDB == null)
+            {
+                throw new Exception("pas de stock trouvé pour le brasseur");
+            }
+            StockWholesaler stock = ConvertToStockWholesaler(stockDB, id);
+            return stock;
+
+        }
 
         public StockBeerWholesalerClient GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)
         {
@@ -116,6 +128,29 @@ namespace _04_SRV.Services
             stockBWS.Quantity = stockBeerWholesaler.Quantity;
 
             return stockBWS;
+        }
+
+        private StockWholesaler ConvertToStockWholesaler(List<StockBeerWholesaler> stockDB, int id)
+        {
+            StockWholesaler stockWholesaler = new StockWholesaler();
+            stockWholesaler.Id = id;
+            stockWholesaler.Name = stockDB.FirstOrDefault().Saler.Name;
+
+            List<BeerToShow> beers = new List<BeerToShow>();
+            foreach (var beerDB in stockDB)
+            {
+                BeerToShow beer = new BeerToShow();
+                beer.Id = beerDB.BeerId;
+                beer.Name = beerDB.beer.Name;
+                beer.Price = beerDB.beer.Price;
+                beer.Degree = beerDB.beer.Degree;
+                beer.Quantity = beerDB.Quantity;
+
+                stockWholesaler.Beers.Add(beer);
+            }
+            stockWholesaler.Beers = beers;
+            
+            return stockWholesaler;
         }
         #endregion
     }

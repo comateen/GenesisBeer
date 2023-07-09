@@ -1,6 +1,7 @@
 ﻿using _01_DB.Entities;
 using _02_DAL.Interfaces;
 using _03_Models.Models;
+using _03_Models.VM;
 using _04_SRV.Interfaces;
 
 namespace _04_SRV.Services
@@ -26,6 +27,7 @@ namespace _04_SRV.Services
             }
             throw new Exception("Le grosiste rechercher n'existe pas");
         }
+
         public bool IsWholesalerExist(int id)
         {
             return _wholesalerRepository.IsWholesalerExist(id);

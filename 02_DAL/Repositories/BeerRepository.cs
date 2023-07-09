@@ -19,7 +19,7 @@ namespace _02_DAL.Repositories
             beers = _context.beers.Include(b => b.Brewer)
                                   .Include(b => b.Wholesalers).ThenInclude(w => w.Saler).ToList();
 
-            return beers.Any();
+            return beers != null;
         }
         public bool GetOneBeer(int id, out Beer beer) 
         {

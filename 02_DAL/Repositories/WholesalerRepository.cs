@@ -1,6 +1,7 @@
 ﻿using _01_DB;
 using _01_DB.Entities;
 using _02_DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,13 @@ namespace _02_DAL.Repositories
             wholesaler = _context.wholesalers.FirstOrDefault(w => w.Id == id);
             return wholesaler != null;
         }
-
+        public bool GetOneWholesalerWithBeer(int id, out Wholesaler wholesaler)
+        {
+            wholesaler = _context.wholesalers.Where(w => w.Id == id)
+                                             .Include(w => w.Beers)
+                                             .FirstOrDefault();
+            return wholesaler != null;
+        }
         public bool IsWholesalerExist(int id)
         {
             bool exist = _context.wholesalers.Any(w => w.Id == id);

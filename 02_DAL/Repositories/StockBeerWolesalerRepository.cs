@@ -25,6 +25,13 @@ namespace _02_DAL.Repositories
             return _context.SaveChanges() > 0;
         }
 
+        public List<StockBeerWholesaler> GetAllStockBeerByWholesalerId(int id)
+        {
+            return _context.stockBeerWholesalers.Where(sbw => sbw.WholesalerId == id)
+                                                .Include(b => b.beer).ThenInclude(w => w.Wholesalers)
+                                                .ToList();                              
+        }
+
         public StockBeerWholesaler GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)
         {
             //return _context.stockBeerWholesalers.FirstOrDefault(sbw => sbw.BeerId == beerId && sbw.WholesalerId == wholesalerId);

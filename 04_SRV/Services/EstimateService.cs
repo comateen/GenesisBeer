@@ -34,8 +34,9 @@ namespace _04_SRV.Services
         {
             int totalQuantityBeer = 0;
             double totalPrice = 0;
-            WholesalerClient wholesaler = _wholesalerService.GetOneWholesaler(addEstimateModel.WholesalerId);
-            if (wholesaler == null)
+
+            StockWholesaler stockWholesaler = _stockBeerWholesalerService.GetAllStockBeerByWholesalerId(addEstimateModel.WholesalerId);
+            if (stockWholesaler == null)
             {
                 throw new Exception($"Le grossiste portant l'identifiant {addEstimateModel.WholesalerId} n'existe pas");
             }
@@ -44,23 +45,22 @@ namespace _04_SRV.Services
             {
                 throw new Exception(errorMessage);
             }
-            
+            //je préfère rassembler toute les infos en une fois plutot que de procéder à un call db dans un foreach, question dep erformence même si 
+            //à cette échelle ça n'a que peut d'influence
             List<BeerToShow> beersToShow = new List<BeerToShow>();
             foreach (var beerEstimate in addEstimateModel.Beers)
             {
-                BeerToShow beer = _beerService.GetOneBeerForEstimateReturn(beerEstimate.BeerId);
+                //si je procède comme suit j'ai un call DB pour chaque itération de mon foreach
+                //BeerToShow beer = _beerService.GetOneBeerForEstimateReturn(beerEstimate.BeerId);
+                BeerToShow beer = stockWholesaler.Beers.FirstOrDefault(b => b.Id == beerEstimate.BeerId);
+
                 if (beer == null)
                 {
-                    throw new Exception($"La bière portant l'identifiant {beerEstimate.BeerId} n'existe pas");
+                    throw new Exception($"Le grossiste {stockWholesaler.Name} ne vend pas la bière portant l'identifiant {beerEstimate.BeerId}");
                 }
-                StockBeerWholesalerClient stockBeerWholesaler = _stockBeerWholesalerService.GetStockBeerWholesalerByBeerIdAndWholesalerId(beerEstimate.BeerId, addEstimateModel.WholesalerId);
-                if (stockBeerWholesaler == null)
+                if (beerEstimate.Quantity > beer.Quantity)
                 {
-                    throw new Exception($"Le grossiste {wholesaler.Name} ne vend pas la bière {beer.Name}");
-                }
-                if(beerEstimate.Quantity > stockBeerWholesaler.Quantity)
-                {
-                    throw new Exception($"Le grossiste {wholesaler.Name} n'a pas assez de stock de bière {beer.Name}");
+                    throw new Exception($"Le grossiste {stockWholesaler.Name} n'a pas assez de stock de bière {beer.Name}");
                 }
 
                 beer.Quantity = beerEstimate.Quantity;
@@ -71,7 +71,8 @@ namespace _04_SRV.Services
             }
 
             EstimateOkReturn estimate = new EstimateOkReturn();
-            estimate.Wholesaler = wholesaler;
+            estimate.Wholesaler.Id = stockWholesaler.Id;
+            estimate.Wholesaler.Name = stockWholesaler.Name;
             estimate.Beers = beersToShow;
 
             estimate.TotalHTVA = DefineTotalHTVA(totalPrice, totalQuantityBeer);

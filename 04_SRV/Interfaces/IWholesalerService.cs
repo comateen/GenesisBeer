@@ -1,4 +1,6 @@
-﻿using _03_Models.Models;
+﻿using _01_DB.Entities;
+using _03_Models.Models;
+using _03_Models.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
