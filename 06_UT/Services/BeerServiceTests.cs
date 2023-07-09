@@ -26,7 +26,6 @@ namespace _04_SRV.Services.Tests
     {
         private static FakeContext _dataContext;
         
-        private 
         const int idBeerOK = 2;
         const int idBeerNoK = -1;
 
