@@ -17,12 +17,12 @@ namespace _01_DB.DataSet
                 new Wholesaler
                 {
                     Id = 1,
-                    Name = "GeneDrinks",
+                    Name = "GeneDrinks"
                 },
                 new Wholesaler
                 {
                     Id = 2,
-                    Name = "TangissartShop",
+                    Name = "TangissartShop"
                 }
             );
 
