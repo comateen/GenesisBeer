@@ -1,7 +1,10 @@
 ﻿using _03_Models.Models;
 using _04_SRV.Interfaces;
+using log4net.Config;
+using log4net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace _05_API.Controllers
 {
@@ -10,10 +13,13 @@ namespace _05_API.Controllers
     public class StockBeerWholesalerController : ControllerBase
     {
         private readonly IStockBeerWholesalerService _stockBeerWholesalerService;
+        private readonly ILoggerService _loggerService;
 
-        public StockBeerWholesalerController(IStockBeerWholesalerService stockBeerWholesalerService)
+        public StockBeerWholesalerController(IStockBeerWholesalerService stockBeerWholesalerService, ILoggerService loggerService)
         {
             _stockBeerWholesalerService = stockBeerWholesalerService;
+            _loggerService = loggerService;
+            InitializeLogger();
         }
 
         [HttpPost]
@@ -22,10 +28,12 @@ namespace _05_API.Controllers
         {
             try
             {
+                _loggerService.Debug($"Start {nameof(HttpMethod)}");
                 return Ok(_stockBeerWholesalerService.AddNewBeerToWholeSaler(stockBeerWholesalerClient));
             }
             catch (Exception ex)
             {
+                _loggerService.Error($"crash in {nameof(HttpMethod)}, {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -36,10 +44,12 @@ namespace _05_API.Controllers
         {
             try
             {
+                _loggerService.Debug($"Start {nameof(HttpMethod)}");
                 return Ok(_stockBeerWholesalerService.UpdateStockBeerWholesaler(stockBeerWholesalerClient));
             }
             catch (Exception ex) 
-            { 
+            {
+                _loggerService.Error($"crash in {nameof(HttpMethod)}, {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -50,12 +60,20 @@ namespace _05_API.Controllers
         {
             try
             {
+                _loggerService.Debug($"Start {nameof(HttpMethod)}");
                 return Ok(_stockBeerWholesalerService.DeleteStockBeerWholesaler(beerId, wholesalerId));
             }
             catch (Exception ex)
             {
+                _loggerService.Error($"crash in {nameof(HttpMethod)}, {ex.Message}");
                 return BadRequest(ex.Message);
             }
+        }
+
+        private void InitializeLogger()
+        {
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(logRepository, new FileInfo("log4netconfig.config"));
         }
     }
 }

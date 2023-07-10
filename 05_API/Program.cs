@@ -14,11 +14,13 @@ builder.Services.AddScoped<IStockBeerWholesalerRepository,StockBeerWolesalerRepo
 builder.Services.AddScoped<IWholesalerRepository, WholesalerRepository>();
 builder.Services.AddScoped<IEstimateRepository, EstimateRepository>();
 // Services
+builder.Services.AddScoped<ILoggerService, LoggerService>();
 builder.Services.AddScoped<IBeerService, BeerService>();
 builder.Services.AddScoped<IBreweryService, BreweryService>();
 builder.Services.AddScoped<IStockBeerWholesalerService, StockBeerWholesalerService>();
 builder.Services.AddScoped<IWholesalerService,  WholesalerService>();
 builder.Services.AddScoped<IEstimateService, EstimateService>();
+
 
 //Config
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("GenesisBeerDB")));

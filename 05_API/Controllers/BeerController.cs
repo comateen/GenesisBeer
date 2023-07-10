@@ -1,7 +1,11 @@
 ﻿using _03_Models.AddModels;
 using _04_SRV.Interfaces;
+using log4net;
+using log4net.Config;
+using log4net.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace _05_API.Controllers
 {
@@ -10,10 +14,15 @@ namespace _05_API.Controllers
     public class BeerController : ControllerBase
     {
         private readonly IBeerService _beerService;
+        private readonly ILoggerService _loggerService;
 
-        public BeerController(IBeerService beerService)
+        
+
+        public BeerController(IBeerService beerService, ILoggerService loggerService)
         {
             _beerService = beerService;
+            _loggerService = loggerService;
+            InitializeLogger();
         }
 
         [HttpGet]
@@ -22,10 +31,12 @@ namespace _05_API.Controllers
         {
             try
             {
+                _loggerService.Debug($"Start {nameof(HttpMethod)}");
                 return Ok(_beerService.GetAllBeerWithBrewerAndSalers());
             }
             catch (Exception ex)
             {
+                _loggerService.Error($"crash in {nameof(HttpMethod)}, {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -36,14 +47,22 @@ namespace _05_API.Controllers
         {
             try
             {
+                _loggerService.Debug($"Start {nameof(HttpMethod)}");
                 _beerService.AddBeer(addBeer);
                 return Ok();
             } 
             catch(Exception ex)
             {
+                _loggerService.Error($"crash in {nameof(HttpMethod)}, {ex.Message}");
                 return BadRequest(ex.Message);
             }
             
+        }
+
+        private void InitializeLogger()
+        {
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(logRepository, new FileInfo("log4netconfig.config"));
         }
     }
 }
