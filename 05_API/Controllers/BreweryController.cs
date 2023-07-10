@@ -19,6 +19,7 @@ namespace _05_API.Controllers
         {
             _breweryService = breweryService;
             _loggerService = loggerService;
+            InitializeLogger();
         }
 
         [HttpGet]
