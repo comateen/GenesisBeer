@@ -1,10 +1,5 @@
-﻿using _02_DAL.Interfaces;
-using _04_SRV.Interfaces;
-using log4net.Config;
-using log4net;
-using Microsoft.AspNetCore.Http;
+﻿using _04_SRV.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace _05_API.Controllers
 {

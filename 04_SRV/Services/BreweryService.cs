@@ -1,7 +1,6 @@
 ﻿
 using _01_DB.Entities;
 using _02_DAL.Interfaces;
-using _03_Models.Models;
 using _03_Models.VM;
 using _04_SRV.Helper;
 using _04_SRV.Interfaces;
@@ -21,8 +20,8 @@ namespace _04_SRV.Services
         #region public method
         public IEnumerable<BreweryWithBeersAndSalers> GetAllBrewerWithBeerAndSalers()
         {
-            List<Brewery> breweries = new List<Brewery>();
-            if(_breweryRepository.TryToGetAllBreweryData(out breweries))
+            List<Brewery> breweries = _breweryRepository.GetAllBreweryData();
+            if (breweries != null && breweries.Count > 0)
             {
                 List<BreweryWithBeersAndSalers> breweryWBS = ConvertBreweriesFromDB(breweries);
 
@@ -42,7 +41,7 @@ namespace _04_SRV.Services
         {
             List<BreweryWithBeersAndSalers> breweryWBSList = new List<BreweryWithBeersAndSalers>();
 
-            foreach(Brewery brewery in breweries)
+            foreach (Brewery brewery in breweries)
             {
                 BreweryWithBeersAndSalers breweryWBS = new BreweryWithBeersAndSalers();
                 breweryWBS.Id = brewery.Id;

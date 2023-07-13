@@ -2,11 +2,6 @@
 using _01_DB.Entities;
 using _01_DB.EntitiesConfigurations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _01_DB
 {
@@ -14,11 +9,11 @@ namespace _01_DB
     {
         public DataContext()
         {
-            
+
         }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
@@ -45,7 +40,7 @@ namespace _01_DB
         }
 
         //Les DBSet qui vont créer des objets IQueryable à qui on pourra envoyer des requêt Linq
-        public DbSet<Brewery> breweries {  get; set; }
+        public DbSet<Brewery> breweries { get; set; }
         public DbSet<Beer> beers { get; set; }
         public DbSet<Wholesaler> wholesalers { get; set; }
         public DbSet<StockBeerWholesaler> stockBeerWholesalers { get; set; }

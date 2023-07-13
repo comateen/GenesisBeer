@@ -3,11 +3,6 @@ using _02_DAL.Interfaces;
 using _03_Models.Models;
 using _03_Models.VM;
 using _04_SRV.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _04_SRV.Services
 {
@@ -28,10 +23,10 @@ namespace _04_SRV.Services
 
         #region public method
         public bool AddNewBeerToWholeSaler(StockBeerWholesalerClient stockBWS)
-        {   
-            if(IsBeerAndSalerExist(stockBWS.BeerId, stockBWS.WholesalerId))
+        {
+            if (IsBeerAndSalerExist(stockBWS.BeerId, stockBWS.WholesalerId))
             {
-                if(stockBWS.Quantity < 0)
+                if (stockBWS.Quantity < 0)
                 {
                     throw new Exception("La quantité de bière ne peut être négative");
                 }
@@ -44,12 +39,10 @@ namespace _04_SRV.Services
             return false;
         }
 
-        
-
         public bool UpdateStockBeerWholesaler(StockBeerWholesalerClient stockBWS)
         {
             StockBeerWholesalerClient stockInDB = GetStockBeerWholesalerByBeerIdAndWholesalerId(stockBWS.BeerId, stockBWS.WholesalerId);
-            if(stockInDB != null && stockBWS.Quantity >= 0)
+            if (stockInDB != null && stockBWS.Quantity >= 0)
             {
                 if (stockInDB.Quantity != stockBWS.Quantity)
                 {
@@ -65,7 +58,7 @@ namespace _04_SRV.Services
         public StockWholesaler GetAllStockBeerByWholesalerId(int id)
         {
             List<StockBeerWholesaler> stockDB = _stockBeerRepository.GetAllStockBeerByWholesalerId(id);
-            if(stockDB == null)
+            if (stockDB == null)
             {
                 throw new Exception("pas de stock trouvé pour le brasseur");
             }
@@ -77,7 +70,7 @@ namespace _04_SRV.Services
         public StockBeerWholesalerClient GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)
         {
             StockBeerWholesaler stockBeerWholesaler = _stockBeerRepository.GetStockBeerWholesalerByBeerIdAndWholesalerId(beerId, wholesalerId);
-            if(stockBeerWholesaler == null)
+            if (stockBeerWholesaler == null)
             {
                 throw new Exception("cette référence n'existe pas");
             }
@@ -92,7 +85,7 @@ namespace _04_SRV.Services
                 throw new Exception("Le brasseur doit d'abord écouler son stock");
             }
             return _stockBeerRepository.DeleteStockBeerWholesaler(ConvertStockClientToDB(stockInDB));
-            
+
         }
 
         #endregion
@@ -137,20 +130,27 @@ namespace _04_SRV.Services
             stockWholesaler.Name = stockDB.FirstOrDefault().Saler.Name;
 
             List<BeerToShow> beers = new List<BeerToShow>();
-            foreach (var beerDB in stockDB)
+            foreach (StockBeerWholesaler beerDB in stockDB)
             {
-                BeerToShow beer = new BeerToShow();
-                beer.Id = beerDB.BeerId;
-                beer.Name = beerDB.beer.Name;
-                beer.Price = beerDB.beer.Price;
-                beer.Degree = beerDB.beer.Degree;
-                beer.Quantity = beerDB.Quantity;
+                BeerToShow beer = GetBeerToshow(beerDB);
 
-                stockWholesaler.Beers.Add(beer);
+                beers.Add(beer);
             }
             stockWholesaler.Beers = beers;
-            
+
             return stockWholesaler;
+        }
+
+        private BeerToShow GetBeerToshow(StockBeerWholesaler beerDB)
+        {
+            BeerToShow beer = new BeerToShow();
+            beer.Id = beerDB.BeerId;
+            beer.Name = beerDB.beer.Name;
+            beer.Price = beerDB.beer.Price;
+            beer.Degree = beerDB.beer.Degree;
+            beer.Quantity = beerDB.Quantity;
+
+            return beer;
         }
         #endregion
     }

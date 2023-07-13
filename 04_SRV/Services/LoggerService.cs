@@ -19,7 +19,7 @@ namespace _04_SRV.Services
         }
         public void Info(string message)
         {
-           _logger?.Info(message);
+            _logger?.Info(message);
         }
         public void Error(string message, Exception? ex = null)
         {

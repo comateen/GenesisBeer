@@ -1,10 +1,6 @@
 ﻿using _03_Models.AddModels;
 using _04_SRV.Interfaces;
-using log4net.Config;
-using log4net;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace _05_API.Controllers
 {

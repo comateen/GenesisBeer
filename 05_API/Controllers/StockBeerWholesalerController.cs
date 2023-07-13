@@ -1,10 +1,6 @@
 ﻿using _03_Models.Models;
 using _04_SRV.Interfaces;
-using log4net.Config;
-using log4net;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace _05_API.Controllers
 {
@@ -46,7 +42,7 @@ namespace _05_API.Controllers
                 _loggerService.Debug($"Start {nameof(HttpMethod)}");
                 return Ok(_stockBeerWholesalerService.UpdateStockBeerWholesaler(stockBeerWholesalerClient));
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 _loggerService.Error($"crash in {nameof(HttpMethod)}, {ex.Message}");
                 return BadRequest(ex.Message);

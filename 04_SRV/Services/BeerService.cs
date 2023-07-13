@@ -5,11 +5,6 @@ using _03_Models.Models;
 using _03_Models.VM;
 using _04_SRV.Helper;
 using _04_SRV.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _04_SRV.Services
 {
@@ -30,10 +25,10 @@ namespace _04_SRV.Services
         public IEnumerable<BeerClient> GetAllBeerWithBrewerAndSalers()
         {
             List<Beer> beers = _beerRepo.GetAllBeerData();
-            if(beers != null && beers.Count > 0)
+            if (beers != null && beers.Count > 0)
             {
                 List<BeerClient> beerClients = ConvertBeerFromDB(beers);
-                
+
                 return beerClients;
             }
             throw new Exception("Nous n'avons pas trouvé de bière");

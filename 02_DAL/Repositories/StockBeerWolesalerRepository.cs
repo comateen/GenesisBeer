@@ -2,11 +2,6 @@
 using _01_DB.Entities;
 using _02_DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _02_DAL.Repositories
 {
@@ -29,7 +24,8 @@ namespace _02_DAL.Repositories
         {
             return _context.stockBeerWholesalers.Where(sbw => sbw.WholesalerId == id)
                                                 .Include(b => b.beer).ThenInclude(w => w.Wholesalers)
-                                                .ToList();                              
+                                                .Include(s => s.Saler)
+                                                .ToList();
         }
 
         public StockBeerWholesaler? GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)

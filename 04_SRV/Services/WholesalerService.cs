@@ -17,8 +17,8 @@ namespace _04_SRV.Services
 
         public WholesalerClient GetOneWholesaler(int id)
         {
-            Wholesaler wholesalerDB; 
-            if(_wholesalerRepository.GetOneWholesaler(id, out wholesalerDB))
+            Wholesaler? wholesalerDB = _wholesalerRepository.GetOneWholesaler(id); 
+            if(wholesalerDB != null)
             {
                 WholesalerClient wholesaler = new WholesalerClient();
                 wholesaler.Id = wholesalerDB.Id;

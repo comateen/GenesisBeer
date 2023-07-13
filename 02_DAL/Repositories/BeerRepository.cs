@@ -8,7 +8,7 @@ namespace _02_DAL.Repositories
     public class BeerRepository : IBeerRepository
     {
         private readonly DataContext _context;
-        
+
         public BeerRepository(DataContext context)
         {
             _context = context;
@@ -21,7 +21,7 @@ namespace _02_DAL.Repositories
 
             return beers;
         }
-        public Beer? GetOneBeer(int id) 
+        public Beer? GetOneBeer(int id)
         {
             Beer? beer = _context.beers.FirstOrDefault(b => b.Id == id);
             return beer;

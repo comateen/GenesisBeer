@@ -10,7 +10,7 @@ namespace _01_DB.EntitiesConfigurations
         {
             builder.ToTable("StockBeerWholesaler");
             //Définition d'un id composite
-            builder.HasKey(sbw => new {sbw.BeerId, sbw.WholesalerId});
+            builder.HasKey(sbw => new { sbw.BeerId, sbw.WholesalerId });
 
             //j'établie la  relation des fk vers leur table correspondante
             builder.HasOne(sbw => sbw.beer)
@@ -23,7 +23,7 @@ namespace _01_DB.EntitiesConfigurations
 
             builder.Property(nameof(StockBeerWholesaler.Quantity))
                    .IsRequired();
-                   
+
         }
     }
 }
