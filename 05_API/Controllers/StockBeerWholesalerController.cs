@@ -19,7 +19,6 @@ namespace _05_API.Controllers
         {
             _stockBeerWholesalerService = stockBeerWholesalerService;
             _loggerService = loggerService;
-            InitializeLogger();
         }
 
         [HttpPost]
@@ -70,10 +69,5 @@ namespace _05_API.Controllers
             }
         }
 
-        private void InitializeLogger()
-        {
-            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("log4netconfig.config"));
-        }
     }
 }

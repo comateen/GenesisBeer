@@ -19,7 +19,6 @@ namespace _05_API.Controllers
         {
             _breweryService = breweryService;
             _loggerService = loggerService;
-            InitializeLogger();
         }
 
         [HttpGet]
@@ -36,12 +35,6 @@ namespace _05_API.Controllers
                 _loggerService.Error($"crash in {nameof(HttpMethod)}, {ex.Message}");
                 return BadRequest(ex.Message);
             }
-        }
-
-        private void InitializeLogger()
-        {
-            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("log4netconfig.config"));
         }
     }
 }

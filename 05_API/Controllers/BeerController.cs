@@ -22,7 +22,6 @@ namespace _05_API.Controllers
         {
             _beerService = beerService;
             _loggerService = loggerService;
-            InitializeLogger();
         }
 
         [HttpGet]
@@ -59,10 +58,6 @@ namespace _05_API.Controllers
             
         }
 
-        private void InitializeLogger()
-        {
-            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("log4netconfig.config"));
-        }
+
     }
 }
