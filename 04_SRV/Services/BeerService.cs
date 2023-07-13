@@ -29,8 +29,8 @@ namespace _04_SRV.Services
         #region public method
         public IEnumerable<BeerClient> GetAllBeerWithBrewerAndSalers()
         {
-            List<Beer> beers = new List<Beer>();
-            if(_beerRepo.TryToGetAllBeerData(out beers))
+            List<Beer> beers = _beerRepo.GetAllBeerData();
+            if(beers != null && beers.Count > 0)
             {
                 List<BeerClient> beerClients = ConvertBeerFromDB(beers);
                 
@@ -41,8 +41,8 @@ namespace _04_SRV.Services
 
         public BeerToShow GetOneBeerForEstimateReturn(int id)
         {
-            Beer beerDB = new Beer();
-            if(_beerRepo.GetOneBeer(id, out beerDB))
+            Beer? beerDB = _beerRepo.GetOneBeer(id);
+            if (beerDB != null)
             {
                 BeerToShow beerToShow = new BeerToShow();
                 beerToShow.Id = beerDB.Id;

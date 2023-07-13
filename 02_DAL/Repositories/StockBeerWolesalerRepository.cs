@@ -32,7 +32,7 @@ namespace _02_DAL.Repositories
                                                 .ToList();                              
         }
 
-        public StockBeerWholesaler GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)
+        public StockBeerWholesaler? GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId)
         {
             //return _context.stockBeerWholesalers.FirstOrDefault(sbw => sbw.BeerId == beerId && sbw.WholesalerId == wholesalerId);
             return _context.stockBeerWholesalers.AsNoTracking().FirstOrDefault(sbw => sbw.BeerId == beerId && sbw.WholesalerId == wholesalerId);

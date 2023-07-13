@@ -13,7 +13,7 @@ namespace _02_DAL.Interfaces
         public bool AddNewBeerToWholeSaler(StockBeerWholesaler stockBeerWolesaler);
         public bool UpdateStockBeerWholesaler(StockBeerWholesaler stockBeerWolesaler);
         public List<StockBeerWholesaler> GetAllStockBeerByWholesalerId(int id);
-        public StockBeerWholesaler GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId);
+        public StockBeerWholesaler? GetStockBeerWholesalerByBeerIdAndWholesalerId(int beerId, int wholesalerId);
         public bool DeleteStockBeerWholesaler(StockBeerWholesaler stockBeerWolesaler);
     }
 }

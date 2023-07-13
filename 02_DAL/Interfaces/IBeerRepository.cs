@@ -9,9 +9,9 @@ namespace _02_DAL.Interfaces
 {
     public interface IBeerRepository
     {
-        public bool TryToGetAllBeerData(out List<Beer> beers);
+        public List<Beer> GetAllBeerData();
         public bool AddBeer(Beer beer);
         public bool IsBeerExist(int id);
-        public bool GetOneBeer(int id, out Beer beer);
+        public Beer? GetOneBeer(int id);
     }
 }

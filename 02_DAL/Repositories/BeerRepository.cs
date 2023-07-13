@@ -14,17 +14,17 @@ namespace _02_DAL.Repositories
             _context = context;
         }
 
-        public bool TryToGetAllBeerData(out List<Beer> beers)
+        public List<Beer> GetAllBeerData()
         {
-            beers = _context.beers.Include(b => b.Brewer)
+            List<Beer> beers = _context.beers.Include(b => b.Brewer)
                                   .Include(b => b.Wholesalers).ThenInclude(w => w.Saler).ToList();
 
-            return beers != null;
+            return beers;
         }
-        public bool GetOneBeer(int id, out Beer beer) 
+        public Beer? GetOneBeer(int id) 
         {
-            beer = _context.beers.FirstOrDefault(b => b.Id == id);
-            return beer != null;
+            Beer? beer = _context.beers.FirstOrDefault(b => b.Id == id);
+            return beer;
         }
         public bool AddBeer(Beer beer)
         {

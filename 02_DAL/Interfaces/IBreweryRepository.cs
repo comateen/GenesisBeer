@@ -4,7 +4,7 @@ namespace _02_DAL.Interfaces
 {
     public interface IBreweryRepository
     {
-        public bool TryToGetAllBreweryData(out List<Brewery> beers);
+        public List<Brewery> GetAllBreweryData();
         public bool IsBreweryExist(int id);
     }
 }

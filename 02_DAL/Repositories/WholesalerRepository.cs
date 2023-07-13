@@ -19,17 +19,17 @@ namespace _02_DAL.Repositories
             _context = context;
         }
 
-        public bool GetOneWholesaler(int id, out Wholesaler wholesaler)
+        public Wholesaler? GetOneWholesaler(int id)
         {
-            wholesaler = _context.wholesalers.FirstOrDefault(w => w.Id == id);
-            return wholesaler != null;
+            Wholesaler? wholesaler = _context.wholesalers.FirstOrDefault(w => w.Id == id);
+            return wholesaler;
         }
-        public bool GetOneWholesalerWithBeer(int id, out Wholesaler wholesaler)
+        public Wholesaler? GetOneWholesalerWithBeer(int id)
         {
-            wholesaler = _context.wholesalers.Where(w => w.Id == id)
+            Wholesaler? wholesaler = _context.wholesalers.Where(w => w.Id == id)
                                              .Include(w => w.Beers)
                                              .FirstOrDefault();
-            return wholesaler != null;
+            return wholesaler;
         }
         public bool IsWholesalerExist(int id)
         {

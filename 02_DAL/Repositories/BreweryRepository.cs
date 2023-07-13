@@ -19,13 +19,13 @@ namespace _02_DAL.Repositories
             _context = context;
         }
 
-        public bool TryToGetAllBreweryData(out List<Brewery> breweries)
+        public List<Brewery> GetAllBreweryData()
         {
-            breweries = _context.breweries.Include(b => b.Beers)
+            List<Brewery>  breweries = _context.breweries.Include(b => b.Beers)
                                           .ThenInclude(sbw => sbw.Wholesalers)
                                           .ThenInclude(w => w.Saler)
                                           .ToList();
-            return breweries.Any();
+            return breweries;
         }
 
         public bool IsBreweryExist(int id)
